@@ -17,7 +17,11 @@ def webhook():
     query = data.get('query', '')
 
     # Perform prediction using Gradio client
-    result = client.predict(query=query, api_name="/predict")
+    
+    result = client.predict(
+		query=query,
+		api_name="/predict"
+    )
 
     # Return the result as JSON response
     return jsonify(result=result)
@@ -28,4 +32,8 @@ def index():
     return "Flask app is running!"
 
 # Run the Flask app
+
+
+
+print(result)
 
