@@ -10,21 +10,32 @@ client = Client("https://c818f6f0883afa8779.gradio.live")
 # Define endpoint for webhook
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    # Get the JSON data from the POST request
-    data = request.json
-    
-    # Extract query from JSON data
-    query = data.get('query', '')
+    try:
+        # Get the JSON data from the POST request
+        data = request.json
+        
+        if not data:
+            return jsonify({'error': 'No data received'}), 400
+        
+        # Extract query from JSON data
+        query = data.get('queryResult', {}).get('queryText', '')
+        
+        if not query:
+            return jsonify({'error': 'No query found in request'}), 400
 
-    # Perform prediction using Gradio client
-    
-    result = client.predict(
-		query=query,
-		api_name="/predict"
-    )
+        # Perform prediction using Gradio client
+        result = client.predict(
+            query=query,
+            api_name="/predict"
+        )
 
-    # Return the result as JSON response
-    return jsonify(result=result)
+        # Return the result as JSON response
+        return jsonify({'fulfillmentText': result})
+    
+    except Exception as e:
+        # Log the error
+        app.logger.error(f"Error processing webhook: {e}")
+        return jsonify({'error': 'Internal Server Error'}), 500
 
 # Define a simple route to test if the Flask app is running
 @app.route('/')
