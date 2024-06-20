@@ -35,5 +35,3 @@ def index():
 
 
 
-print(result)
-
