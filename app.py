@@ -5,7 +5,7 @@ from gradio_client import Client
 app = Flask(__name__)
 
 # Initialize Gradio client
-client = Client("srinuksv/SRUNU")
+client = Client("srinukethanaboina/ME")
 
 # Define endpoint for webhook
 @app.route('/webhook', methods=['POST'])
