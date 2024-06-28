@@ -1,5 +1,4 @@
 
-
 import os
 from flask import Flask, request, jsonify
 from gradio_client import Client
@@ -32,8 +31,8 @@ def load_conversation_history(user_id):
         with open(history_file, 'r') as f:
             lines = f.readlines()
             for line in lines:
-                if line.strip():
-                    query, response = line.split('|')
+                if '|' in line:
+                    query, response = line.split('|', 1)
                     query = query.strip()
                     response = response.strip()
                     if query in history:
@@ -107,9 +106,8 @@ def memorize_conversation(user_id, query, response, chat_history):
 def index():
     return "Flask app is running!"
 
-# Run the Flask app
-if __name__ == '__main__':
-    app.run(debug=True)
+
+
 
 
 
