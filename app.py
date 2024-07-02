@@ -5,7 +5,7 @@ from gradio_client import Client
 app = Flask(__name__)
 
 # Initialize Gradio client
-client = Client("srinukethanaboina/ME")
+client = Client("srinuksv/SRUNU")
 
 # Dictionary to store conversation history
 conversation_history = {}
