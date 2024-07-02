@@ -1,11 +1,12 @@
 from flask import Flask, request, jsonify
 from gradio_client import Client
+import os
 
 # Initialize Flask app
 app = Flask(__name__)
 
 # Initialize Gradio client
-client = Client("srinuksv/SRUNU")
+client = Client("srinuksv/SRUNU")  # Replace with your Gradio app name
 
 # Dictionary to store conversation history
 conversation_history = {}
@@ -61,4 +62,5 @@ def webhook():
 def index():
     return "Flask app is running!"
 
-
+if __name__ == '__main__':
+    app.run(port=5000, debug=True)
