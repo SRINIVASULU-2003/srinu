@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot | RedFerns Tech</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #chatbot-toggle-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px;
+            border: none;
+            background-color: #1087FF;
+            color: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #chatbot-toggle-btn img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .chatbot-popup {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            max-width: 90%;
+            z-index: 10000;
+        }
+
+        .chat-header {
+            background-color: #1087FF;
+            color: #fff;
+            padding: 15px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #close-btn {
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .chat-box {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-message, .bot-message {
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            max-width: 80%;
+            word-wrap: break-word;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-message {
+            background-color: #E5E5EA;
+            align-self: flex-end;
+            display: flex;
+            align-items: center;
+        }
+
+        .bot-message {
+            background-color: #F1F0F0;
+            align-self: flex-start;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .message-content {
+            margin-left: 10px;
+        }
+
+        .user-message::before, .bot-message::before {
+            content: '';
+            width: 30px;
+            height: 30px;
+            background-size: cover;
+            border-radius: 50%;
+        }
+
+        .user-message::before {
+            background-image: url('{{ url_for('static', filename='user.jpeg') }}');
+        }
+
+        .bot-message::before {
+            background-image: url('{{ url_for('static', filename='bot.png') }}');
+        }
+
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .button-container button {
+            background-color: #1087FF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-container button:hover {
+            background-color: #0a6bcc;
+        }
+    </style>
+</head>
+<body>
+    <button id="chatbot-toggle-btn"><img src="{{ url_for('static', filename='chatbot.png') }}" alt="Chatbot Toggle" /></button>
+    <div class="chatbot-popup" id="chatbot-popup">
+        <div class="chat-header">
+            <span>FernAI</span>
+            <button id="close-btn">&times;</button>
+        </div>
+        <div class="chat-box" id="chat-box">
+            <div class="bot-message">
+                <span class="message-content">Hi! Welcome to RedFerns Tech! I'm FernAI, here to help you explore our innovative solutions and services. Please select from below:</span>
+                <div class="button-container">
+                    <button onclick="sendMessage('know more about redferns tech')">Know more about RedFerns Tech</button>
+                    <button onclick="sendMessage('our services')">Our services</button>
+                    <button onclick="sendMessage('our products')">Our products</button>
+                    <button onclick="sendMessage('career opportunities')">Career opportunities</button>
+                    <button onclick="sendMessage('chat with an expert')">Chat with an expert</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('chatbot-toggle-btn').addEventListener('click', function() {
+            const chatbotPopup = document.getElementById('chatbot-popup');
+            chatbotPopup.style.display = chatbotPopup.style.display === 'block' ? 'none' : 'block';
+        });
+
+        document.getElementById('close-btn').addEventListener('click', function() {
+            document.getElementById('chatbot-popup').style.display = 'none';
+        });
+
+        function sendMessage(message) {
+            appendMessage('user', message);
+            fetch('/get_response', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'user_input=' + encodeURIComponent(message)
+            })
+            .then(response => response.json())
+            .then(data => {
+                appendMessage('bot', data.response);
+                if (data.options && data.options.length > 0) {
+                    const buttonContainer = document.createElement('div');
+                    buttonContainer.classList.add('button-container');
+                    data.options.forEach(option => {
+                        const button = document.createElement('button');
+                        button.textContent = option;
+                        button.onclick = () => sendMessage(option);
+                        buttonContainer.appendChild(button);
+                    });
+                    document.getElementById('chat-box').appendChild(buttonContainer);
+                }
+                if (data.link) {
+                    appendMessage('bot', `<a href="${data.link}" target="_blank">Click here</a>`);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                appendMessage('bot', 'Sorry, there was an error processing your request. Please try again.');
+            });
+        }
+
+        function appendMessage(sender, message) {
+            const chatBox = document.getElementById('chat-box');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+            messageElement.innerHTML = `<span class="message-content">${message}</span>`;
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
