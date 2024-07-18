@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot | RedFerns Tech</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,7 +27,7 @@
             right: 20px;
             padding: 12px;
             border: none;
-            background-color: #1087FF;
+            background-color: #f49179;
             color: #fff;
             border-radius: 50%;
             cursor: pointer;
@@ -53,7 +54,7 @@
         }
 
         .chat-header {
-            background-color: #1087FF;
+            background-color: #CF2E2E;
             color: #fff;
             padding: 15px;
             border-top-left-radius: 10px;
@@ -116,7 +117,7 @@
         }
 
         .user-message::before {
-            background-image: url('{{ url_for('static', filename='user.jpeg') }}');
+            background-image: url('{{ url_for('static', filename='user.png') }}');
         }
 
         .bot-message::before {
@@ -131,7 +132,7 @@
         }
 
         .button-container button {
-            background-color: #1087FF;
+            background-color: #ef6a61;
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -142,12 +143,17 @@
         }
 
         .button-container button:hover {
-            background-color: #0a6bcc;
+            background-color: #f63838;
+        }
+
+        .gradio-container {
+            display: none;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <button id="chatbot-toggle-btn"><img src="{{ url_for('static', filename='chatbot.png') }}" alt="Chatbot Toggle" /></button>
+    <button id="chatbot-toggle-btn"><img src="{{ url_for('static', filename='chatbot.png') }}" alt="Chatbot Toggle" />Chat With US</button>
     <div class="chatbot-popup" id="chatbot-popup">
         <div class="chat-header">
             <span>FernAI</span>
@@ -157,15 +163,22 @@
             <div class="bot-message">
                 <span class="message-content">Hi! Welcome to RedFerns Tech! I'm FernAI, here to help you explore our innovative solutions and services. Please select from below:</span>
                 <div class="button-container">
-                    <button onclick="sendMessage('know more about redferns tech')">Know more about RedFerns Tech</button>
-                    <button onclick="sendMessage('our services')">Our services</button>
-                    <button onclick="sendMessage('our products')">Our products</button>
-                    <button onclick="sendMessage('career opportunities')">Career opportunities</button>
-                    <button onclick="sendMessage('chat with an expert')">Chat with an expert</button>
+                    <button class="btn btn-primary" onclick="sendMessage('know more about redferns tech')">Know more about RedFerns Tech</button>
+                    <button class="btn btn-primary" onclick="sendMessage('our services')">Our services</button>
+                    <button class="btn btn-primary" onclick="sendMessage('our products')">Our products</button>
+                    <button class="btn btn-primary" onclick="sendMessage('career opportunities')">Career opportunities</button>
+                    <button class="btn btn-primary" onclick="chatWithExpert()">Chat with an expert</button>
                 </div>
             </div>
         </div>
+        <div class="gradio-container" id="gradio-container">
+            <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.36.1/gradio.js"></script>
+            <gradio-app src="https://srinuksv-srunu.hf.space"></gradio-app>
+        </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         document.getElementById('chatbot-toggle-btn').addEventListener('click', function() {
             const chatbotPopup = document.getElementById('chatbot-popup');
@@ -194,6 +207,7 @@
                     data.options.forEach(option => {
                         const button = document.createElement('button');
                         button.textContent = option;
+                        button.classList.add('btn', 'btn-primary');
                         button.onclick = () => sendMessage(option);
                         buttonContainer.appendChild(button);
                     });
@@ -216,6 +230,10 @@
             messageElement.innerHTML = `<span class="message-content">${message}</span>`;
             chatBox.appendChild(messageElement);
             chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function chatWithExpert() {
+            window.location.href = '/chatbot';
         }
     </script>
 </body>
