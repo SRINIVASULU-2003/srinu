@@ -49,20 +49,20 @@ def get_response():
         response = ("Currency Conversion App:\n- Real-time Currency Conversion\n- Multi API Integration\n"
                     "- Multi Currency Support\n- User Friendly Interface\n- Reliable and Accurate\n"
                     "- Enhanced Reporting")
-        link = "https://appexchange.salesforce.com/appxListingDetail?listingId=6d605bd9de3c-49d3-9fa4-ec3caabd5d63"
+        link = "https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000Is77CUAR"
     elif user_input == 'mass approvals app':
         response = ("Mass Approvals App:\n- Effortless Approval Management\n- Streamlined Approvals\n"
                     "- Simplify Approvals\n- Boost Productivity\n- Seamless Integration\n- Customization")
-        link = "https://appexchange.salesforce.com/appxListingDetail?listingId=e671f4fe92fb476099e57a5df5754cfe"
+        link = "https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000K24EdUAJ"
     elif user_input == 'thumbnail viewer app':
         response = ("Thumbnail Viewer App:\n- Visual Delight for Files and Images\n- Immersive Visual Experience\n"
                     "- Streamlined Content Management\n- Blazing Fast Performance\n- Effortless File and Image Upload")
-        link = "https://appexchange.salesforce.com/appxListingDetail?listingId=3473ffd3d530462f828fd2c69f80d89d"
+        link = "https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000K8u1dUAB"
     elif user_input == 'product filter app':
         response = ("Product Filter App:\n- Simplify Salesforce Product Searches with Precision Filtering\n"
                     "- Tailored Search Results\n- Seamless Integration\n- Advanced Filtering Options\n"
                     "- Boosted Productivity")
-        link = "https://appexchange.salesforce.com/appxListingDetail?listingId=cf4b19d4866749f783b0d2bc4032527b"
+        link = "https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000K23xNUAR"
     elif user_input == 'career opportunities':
         response = "Click the link for career opportunities at RedFerns Tech."
         link = "https://redfernstech.com/careers/"
