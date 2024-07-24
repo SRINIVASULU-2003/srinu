@@ -24,23 +24,23 @@ def get_response():
         response = "Please choose from the following service areas:"
         options = ["Salesforce", "Zoho", "Data Science and Machine Learning", "ITSM Tools - ServiceNow"]
     elif user_input == 'salesforce':
-        response = ("Salesforce Services:\n- Implementation\n- Customization\n- Integration\n- Support\n"
+        response = ("Salesforce Services:\nImplementation\nCustomization\nIntegration\nSupport\n"
                     "Explore our key solutions for more details:")
-        #options = ["Sales Cloud Implementation", "Service Cloud Setup", "Custom Application Development", 
-         #          "Salesforce Training", "Data Migration and Cleanup", "Experience Cloud Development",
-            #       "Salesforce Analytics and Reporting", "Salesforce CPQ"]
+        options = ["menu"]
     elif user_input == 'zoho':
-        response = ("Zoho Services:\n- Implementation\n- Customization\n- Training Sessions\n"
+        response = ("Zoho Services:\nImplementation\nCustomization\nTraining Sessions\n"
                     "Choose a specific Zoho service to learn more:")
        # options = ["Zoho CRM", "Zoho Books", "Zoho Projects", "Zoho Analytics"]
+       options = ["menu"]
     elif user_input == 'odoo':
         response = "Details about Odoo services..."
+        options = ["menu"]
     elif user_input == 'itsm tools - servicenow':
         response = ("ServiceNow Implementation:\n- End-to-End Implementation\n- Custom App Development\n"
                     "- IT Service Management\n- Support")
     elif user_input == 'data science and machine learning':
-        response = ("Data Science Solutions:\n- Data Analysis\n- Predictive Modeling\n- Machine Learning\n"
-                    "- Data Visualization\nChoose an area to explore further:")
+        response = ("Data Science Solutions:\nData Analysis\nPredictive Modeling\nMachine Learning\n"
+                    "Data Visualization\nChoose an area to explore further:")
         options = ["Data Science", "Machine Learning"]
     elif user_input == 'our products':
         response = "Explore our innovative apps:"
@@ -50,26 +50,34 @@ def get_response():
                     "- Multi Currency Support\n- User Friendly Interface\n- Reliable and Accurate\n"
                     "- Enhanced Reporting")
         link = "https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000Is77CUAR"
+        options = ["menu"]
     elif user_input == 'mass approvals app':
         response = ("Mass Approvals App:\n- Effortless Approval Management\n- Streamlined Approvals\n"
                     "- Simplify Approvals\n- Boost Productivity\n- Seamless Integration\n- Customization")
         link = "https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000K24EdUAJ"
+        options = ["menu"]
     elif user_input == 'thumbnail viewer app':
         response = ("Thumbnail Viewer App:\n- Visual Delight for Files and Images\n- Immersive Visual Experience\n"
                     "- Streamlined Content Management\n- Blazing Fast Performance\n- Effortless File and Image Upload")
         link = "https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000K8u1dUAB"
+        options = ["menu"]
     elif user_input == 'product filter app':
         response = ("Product Filter App:\n- Simplify Salesforce Product Searches with Precision Filtering\n"
                     "- Tailored Search Results\n- Seamless Integration\n- Advanced Filtering Options\n"
                     "- Boosted Productivity")
         link = "https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000K23xNUAR"
+        options = ["menu"]
     elif user_input == 'career opportunities':
         response = "Click the link for career opportunities at RedFerns Tech."
         link = "https://redfernstech.com/careers/"
+    elif user_input == 'menu':
+        response ="Hi! Welcome to RedFerns Tech! I'm FernAI, here to help you explore our innovative solutions and services.\n Please select from below"
+        options = ["Know more about RedFerns Tech", "Our services","Our products","Career opportunities","Chat with an expert"]
     elif user_input == 'chatwith':
         return redirect('/chatbot')
     else:
-        response = "we will update it."
+        response = "You can contact us and discuss using this link."
+        link ="https://redfernstech.com/contact-us/"
 
     return jsonify(response=response, options=options, link=link)
 
