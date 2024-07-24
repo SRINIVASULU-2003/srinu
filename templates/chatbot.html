@@ -12,20 +12,31 @@
             display: flex;
             justify-content: flex-end;
             align-items: center;
+            font-family: Arial, sans-serif;
         }
         .chatbot-container {
-            width: 400px;
-            height: 100%;
-            box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+            width: 350px;
+            height: 80%;
+            max-height: 600px;
+            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
             background-color: #ffffff;
             position: relative;
             display: flex;
             flex-direction: column;
+            border-radius: 5px;
+            overflow: hidden;
         }
         iframe {
             border: 0;
             width: 100%;
             height: 100%;
+        }
+        .header {
+            background-color: #CF2E2E;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 18px;
         }
         .close-button {
             position: absolute;
@@ -49,6 +60,9 @@
 </head>
 <body>
     <div class="chatbot-container" id="chatbot-container">
+        <div class="header">
+            RedFerns Tech Assistant
+        </div>
         <button class="close-button" onclick="closeChatbot()">×</button>
         <iframe src="https://srinuksv-srunu.hf.space" allowfullscreen></iframe>
     </div>
