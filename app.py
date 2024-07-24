@@ -1,17 +1,18 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
 @app.route('/chatbot')
 def chatbot():
     return render_template('chatbot.html')
 
 @app.route('/get_response', methods=['POST'])
 def get_response():
-    user_input = request.form['user_input'].lower()
+    user_input = request.form.get('user_input', '').lower()  # Use get() to avoid KeyError
     response = ""
     options = []
     link = ""
@@ -30,8 +31,7 @@ def get_response():
     elif user_input == 'zoho':
         response = ("Zoho Services:\nImplementation\nCustomization\nTraining Sessions\n"
                     "Choose a specific Zoho service to learn more:")
-       # options = ["Zoho CRM", "Zoho Books", "Zoho Projects", "Zoho Analytics"]
-       options = ["menu"]
+        options = ["menu"]
     elif user_input == 'odoo':
         response = "Details about Odoo services..."
         options = ["menu"]
@@ -71,13 +71,14 @@ def get_response():
         response = "Click the link for career opportunities at RedFerns Tech."
         link = "https://redfernstech.com/careers/"
     elif user_input == 'menu':
-        response ="Hi! Welcome to RedFerns Tech! I'm FernAI, here to help you explore our innovative solutions and services.\n Please select from below"
-        options = ["Know more about RedFerns Tech", "Our services","Our products","Career opportunities","Chat with an expert"]
+        response = ("Hi! Welcome to RedFerns Tech! I'm FernAI, here to help you explore our innovative solutions and services.\n"
+                    "Please select from below")
+        options = ["Know more about RedFerns Tech", "Our services", "Our products", "Career opportunities", "Chat with an expert"]
     elif user_input == 'chatwith':
         return redirect('/chatbot')
     else:
         response = "You can contact us and discuss using this link."
-        link ="https://redfernstech.com/contact-us/"
+        link = "https://redfernstech.com/contact-us/"
 
     return jsonify(response=response, options=options, link=link)
 
