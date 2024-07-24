@@ -76,6 +76,8 @@ def get_response():
         options = ["Know more about RedFerns Tech", "Our services", "Our products", "Career opportunities", "Chat with an expert"]
     elif user_input == 'chatwith':
         return redirect('/chatbot')
+    elif user_input == 'Chat with an expert':
+        return redirect('/chatbot')
     else:
         response = "You can contact us and discuss using this link."
         link = "https://redfernstech.com/contact-us/"
