@@ -21,29 +21,9 @@
             height: 100vh;
         }
 
-        #chatbot-toggle-btn {
+        .chatbot-popup {
             position: fixed;
             bottom: 20px;
-            right: 20px;
-            padding: 12px;
-            border: none;
-            background-color: #f49179;
-            color: #fff;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 1001;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        #chatbot-toggle-btn img {
-            width: 24px;
-            height: 24px;
-        }
-
-        .chatbot-popup {
-            display: none;
-            position: fixed;
-            bottom: 80px;
             right: 20px;
             background-color: #fff;
             border-radius: 10px;
@@ -153,7 +133,6 @@
     </style>
 </head>
 <body>
-    <button id="chatbot-toggle-btn"><img src="{{ url_for('static', filename='chatbot.png') }}" alt="Chatbot Toggle" />Chat With US</button>
     <div class="chatbot-popup" id="chatbot-popup">
         <div class="chat-header">
             <span>FernAI</span>
@@ -180,9 +159,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        document.getElementById('chatbot-toggle-btn').addEventListener('click', function() {
-            const chatbotPopup = document.getElementById('chatbot-popup');
-            chatbotPopup.style.display = chatbotPopup.style.display === 'block' ? 'none' : 'block';
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('chatbot-popup').style.display = 'block';
         });
 
         document.getElementById('close-btn').addEventListener('click', function() {
