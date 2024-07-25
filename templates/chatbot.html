@@ -38,10 +38,10 @@
             font-size: 18px;
             position: relative;
         }
-        .close-button {
+        .back-button {
             position: absolute;
             top: 50%;
-            right: 10px;
+            left: 10px;
             transform: translateY(-50%);
             background: none;
             border: none;
@@ -56,15 +56,18 @@
 <body>
     <div class="chatbot-container" id="chatbot-container">
         <div class="header">
+            <button class="back-button" onclick="goBack()">&#8592;</button>
             RedFerns Tech Assistant
-            <button class="close-button" onclick="closeChatbot()">&times;</button>
         </div>
-        <iframe src="https://srinuksv-srunu.hf.space" allowfullscreen></iframe>
+        <iframe id="chatbot-iframe" src="https://srinuksv-srunu.hf.space" allowfullscreen></iframe>
     </div>
 
     <script>
-        function closeChatbot() {
-            document.getElementById('chatbot-container').style.display = 'none';
+        function goBack() {
+            var iframe = document.getElementById('chatbot-iframe');
+            if (iframe.contentWindow.history.length > 1) {
+                iframe.contentWindow.history.back();
+            }
         }
     </script>
 </body>
