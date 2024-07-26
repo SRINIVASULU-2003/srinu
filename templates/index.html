@@ -183,39 +183,42 @@
         });
 
         function sendMessage(message) {
-            appendMessage('user', message);
-            fetch('/get_response', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: 'user_input=' + encodeURIComponent(message)
-            })
-            .then(response => response.json())
-            .then(data => {
-                appendMessage('bot', data.response);
-                if (data.options && data.options.length > 0) {
-                    const buttonContainer = document.createElement('div');
-                    buttonContainer.classList.add('button-container');
-                    data.options.forEach(option => {
-                        const button = document.createElement('button');
-                        button.textContent = option;
-                        button.classList.add('btn', 'btn-primary');
-                        button.onclick = () => sendMessage(option);
-                        buttonContainer.appendChild(button);
-                    });
-                    document.getElementById('chat-box').appendChild(buttonContainer);
-                }
-                if (data.link) {
-                    appendMessage('bot', `<a href="${data.link}" target="_blank">Click here</a>`);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                appendMessage('bot', 'Sorry, there was an error processing your request. Please try again.');
-            });
-        }
-
+    if (message.toLowerCase() === "chat with an expert") {
+        window.location.href = '/chatbot';
+    } else {
+        appendMessage('user', message);
+        fetch('/get_response', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'user_input=' + encodeURIComponent(message)
+        })
+        .then(response => response.json())
+        .then(data => {
+            appendMessage('bot', data.response);
+            if (data.options && data.options.length > 0) {
+                const buttonContainer = document.createElement('div');
+                buttonContainer.classList.add('button-container');
+                data.options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.classList.add('btn', 'btn-primary');
+                    button.onclick = () => sendMessage(option);
+                    buttonContainer.appendChild(button);
+                });
+                document.getElementById('chat-box').appendChild(buttonContainer);
+            }
+            if (data.link) {
+                appendMessage('bot', `<a href="${data.link}" target="_blank">Click here</a>`);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            appendMessage('bot', 'Sorry, there was an error processing your request. Please try again. ');
+        });
+    }
+}
         function appendMessage(sender, message) {
             const chatBox = document.getElementById('chat-box');
             const messageElement = document.createElement('div');
