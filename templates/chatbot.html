@@ -59,14 +59,28 @@
             <button class="back-button" onclick="goBack()">&#8592;</button>
             RedFerns Tech Assistant
         </div>
-        <iframe id="chatbot-iframe" src="https://srinuksv-srunu.hf.space" allowfullscreen></iframe>
+        <iframe id="chatbot-iframe" allowfullscreen></iframe>
     </div>
 
     <script>
         function goBack() {
             window.location.href = '/';
+        }
+
+        function loadRandomChatbot() {
+            const chatbots = ["Lily", "Clara"];
+            const selectedChatbot = chatbots[Math.floor(Math.random() * chatbots.length)];
+            const iframe = document.getElementById('chatbot-iframe');
+
+            if (selectedChatbot === "Clara") {
+                iframe.src = "https://srinuksv-srunu.hf.space";
+            } else {
+                iframe.src = "https://srinukethanaboina-srunu.hf.space";
             }
-        
+        }
+
+        // Load a random chatbot when the page loads
+        window.onload = loadRandomChatbot;
     </script>
 </body>
 </html>
