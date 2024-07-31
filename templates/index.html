@@ -183,13 +183,19 @@
         });
 
         function sendMessage(message) {
-    if (message.toLowerCase() === "chat with an expert") {
+    // Convert message to lower case for consistent comparison
+    const lowerCaseMessage = message.toLowerCase();
+
+    // Redirect for specific messages
+    if (lowerCaseMessage === "chat with an expert") {
         window.location.href = '/chatbot';
-    }else if(message.toLowerCase() === "currency conversion app"){
-        window.location.href =  'https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000Is77CUAR';
-    }
-    else {
+    } else if (lowerCaseMessage === "currency conversion app") {
+        window.location.href = 'https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000Is77CUAR';
+    } else {
+        // Append the user's message to the chat interface
         appendMessage('user', message);
+
+        // Send the message to the server
         fetch('/get_response', {
             method: 'POST',
             headers: {
@@ -199,7 +205,10 @@
         })
         .then(response => response.json())
         .then(data => {
+            // Append the bot's response to the chat interface
             appendMessage('bot', data.response);
+
+            // Create buttons for each option provided in the response
             if (data.options && data.options.length > 0) {
                 const buttonContainer = document.createElement('div');
                 buttonContainer.classList.add('button-container');
@@ -212,16 +221,19 @@
                 });
                 document.getElementById('chat-box').appendChild(buttonContainer);
             }
+
+            // Append a clickable link if provided in the response
             if (data.link) {
                 appendMessage('bot', `<a href="${data.link}" target="_blank">Click here</a>`);
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            appendMessage('bot', 'Sorry, there was an error processing your request. Please try again. ');
+            appendMessage('bot', 'Sorry, there was an error processing your request. Please try again.');
         });
     }
 }
+
         function appendMessage(sender, message) {
             const chatBox = document.getElementById('chat-box');
             const messageElement = document.createElement('div');
