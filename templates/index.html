@@ -185,7 +185,10 @@
         function sendMessage(message) {
     if (message.toLowerCase() === "chat with an expert") {
         window.location.href = '/chatbot';
-    } else {
+    }else if(message.toLowerCase() === "currency conversion app"){
+        window.location.href =  'https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000Is77CUAR';
+    }
+    else {
         appendMessage('user', message);
         fetch('/get_response', {
             method: 'POST',
