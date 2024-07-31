@@ -31,7 +31,7 @@
             gap: 15px;
             z-index: 10000;
             max-height: 80vh;
-            height:500px;
+            height: 500px;
             overflow-y: auto;
         }
 
@@ -59,7 +59,7 @@
 <body>
     <div class="form-container">
         <h2>To guide you better, we need some basic information</h2>
-        <form action="/submit-form" method="post">
+        <form id="contactForm" action="/submit-form" method="post">
             <div class="form-group">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" class="form-control" required>
@@ -76,7 +76,7 @@
                 <label for="countrycode">Country Code:</label>
                 <select id="countrycode" name="countrycode" class="form-control" required>
                     <option value="">Select a country</option>
-                        <option value="AF">Afghanistan (+93)</option>
+                    <option value="AF">Afghanistan (+93)</option>
                         <option value="AL">Albania (+355)</option>
                         <option value="DZ">Algeria (+213)</option>
                         <option value="AS">American Samoa (+1-684)</option>
@@ -327,6 +327,13 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
+            // Add your form submission logic here, e.g., AJAX call to the server
+            // After successful form submission, redirect to /home
+            window.location.href = '/home';
+        });
+    </script>
 </body>
 </html>
-
