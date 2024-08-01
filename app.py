@@ -23,11 +23,10 @@ def get_response():
                     "We are committed to delivering innovative and customized solutions to meet your business needs.")
     elif user_input == 'our services':
         response = "Please choose from the following service areas:"
-        options = ["Salesforce", "Zoho", "Data Science and Machine Learning", "ITSM Tools - ServiceNow"]
+        options = ["Salesforce", "Zoho", "Data Science","Machine Learning"]
     elif user_input == 'salesforce':
-        response = ("Salesforce Services:\nImplementation\nCustomization\nIntegration\nSupport\n"
-                    "Explore our key solutions for more details:")
-        options = ["menu"]
+        response = "Please choose from the following service areas:"
+        options = ["lightning service","admin support","app development","sites and communities"]
     elif user_input == 'zoho':
         response = ("Zoho Services:\nImplementation\nCustomization\nTraining Sessions\n"
                     "Choose a specific Zoho service to learn more:")
