@@ -2,10 +2,8 @@ from flask import Flask, request, jsonify, render_template, redirect
 
 app = Flask(__name__)
 
+
 @app.route('/')
-def index1():
-    return render_template('form.html')
-@app.route('/home')
 def index():
     return render_template('index.html')
 @app.route('/chatbot')
