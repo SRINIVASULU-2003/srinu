@@ -21,6 +21,7 @@ def get_response():
         response = ("RedFerns Tech is a leading technology solutions provider specializing in "
                     "Salesforce consultancy, Zoho services, ServiceNow implementation, and Data Science solutions. "
                     "We are committed to delivering innovative and customized solutions to meet your business needs.")
+        options = ["menu"]
     elif user_input == 'our services':
         response = "Please choose from the following service areas:"
         options = ["Salesforce", "Zoho", "Data Science","Machine Learning"]
