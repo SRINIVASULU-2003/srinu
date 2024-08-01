@@ -24,10 +24,10 @@ def get_response():
         options = ["menu"]
     elif user_input == 'our services':
         response = "Please choose from the following service areas:"
-        options = ["Salesforce", "Zoho", "Data Science","Machine Learning"]
+        options = ["Salesforce", "Zoho", "Data Science","Machine Learning","menu"]
     elif user_input == 'salesforce':
         response = "Please choose from the following service areas:"
-        options = ["lightning service","admin support","app development","sites and communities"]
+        options = ["lightning service","admin support","app development","sites and communities","menu"]
     elif user_input == 'zoho':
         response = ("Zoho Services:\nImplementation\nCustomization\nTraining Sessions\n"
                     "Choose a specific Zoho service to learn more:")
@@ -44,7 +44,7 @@ def get_response():
         options = ["Data Science", "Machine Learning"]
     elif user_input == 'our products':
         response = "Explore our innovative apps:"
-        options = ["Currency Conversion App", "Mass Approvals App", "Thumbnail Viewer App", "Product Filter App"]
+        options = ["Currency Conversion App", "Mass Approvals App", "Thumbnail Viewer App", "Product Filter App","menu"]
     elif user_input == 'currency conversion app':
         response = ("Currency Conversion App:\n- Real-time Currency Conversion\n- Multi API Integration\n"
                     "- Multi Currency Support\n- User Friendly Interface\n- Reliable and Accurate\n"
