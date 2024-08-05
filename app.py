@@ -21,20 +21,20 @@ def get_response():
         response = ("RedFerns Tech is a leading technology solutions provider specializing in "
                     "Salesforce consultancy, Zoho services, ServiceNow implementation, and Data Science solutions. "
                     "We are committed to delivering innovative and customized solutions to meet your business needs.")
-        options = ["menu"]
+        options = ["Menu"]
     elif user_input == 'our services':
         response = "Please choose from the following service areas:"
-        options = ["Salesforce", "Zoho", "Data Science","Machine Learning","menu"]
+        options = ["Salesforce", "Zoho", "Data Science","Machine Learning","Menu"]
     elif user_input == 'salesforce':
         response = "Please choose from the following service areas:"
-        options = ["lightning service","admin support","app development","sites and communities","menu"]
+        options = ["Lightning Service","Admin Support","App Development","Sites and Communities","Menu"]
     elif user_input == 'zoho':
         response = ("Zoho Services:\nImplementation\nCustomization\nTraining Sessions\n"
                     "Choose a specific Zoho service to learn more:")
-        options = ["menu"]
+        options = ["Menu"]
     elif user_input == 'odoo':
         response = "Details about Odoo services..."
-        options = ["menu"]
+        options = ["Menu"]
     elif user_input == 'itsm tools - servicenow':
         response = ("ServiceNow Implementation:\n- End-to-End Implementation\n- Custom App Development\n"
                     "- IT Service Management\n- Support")
@@ -44,33 +44,33 @@ def get_response():
         options = ["Data Science", "Machine Learning"]
     elif user_input == 'our products':
         response = "Explore our innovative apps:"
-        options = ["Currency Conversion App", "Mass Approvals App", "Thumbnail Viewer App", "Product Filter App","menu"]
+        options = ["Currency Conversion App", "Mass Approvals App", "Thumbnail Viewer App", "Product Filter App","Menu"]
     elif user_input == 'currency conversion app':
         response = ("Currency Conversion App:\n- Real-time Currency Conversion\n- Multi API Integration\n"
                     "- Multi Currency Support\n- User Friendly Interface\n- Reliable and Accurate\n"
                     "- Enhanced Reporting")
         link = "https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000Is77CUAR"
-        options = ["menu"]
+        options = ["Menu"]
     elif user_input == 'mass approvals app':
         response = ("Mass Approvals App:\n- Effortless Approval Management\n- Streamlined Approvals\n"
                     "- Simplify Approvals\n- Boost Productivity\n- Seamless Integration\n- Customization")
         link = "https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000K24EdUAJ"
-        options = ["menu"]
+        options = ["Menu"]
     elif user_input == 'thumbnail viewer app':
         response = ("Thumbnail Viewer App:\n- Visual Delight for Files and Images\n- Immersive Visual Experience\n"
                     "- Streamlined Content Management\n- Blazing Fast Performance\n- Effortless File and Image Upload")
         link = "https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000K8u1dUAB"
-        options = ["menu"]
+        options = ["Menu"]
     elif user_input == 'product filter app':
         response = ("Product Filter App:\n- Simplify Salesforce Product Searches with Precision Filtering\n"
                     "- Tailored Search Results\n- Seamless Integration\n- Advanced Filtering Options\n"
                     "- Boosted Productivity")
         link = "https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000K23xNUAR"
-        options = ["menu"]
+        options = ["Menu"]
     elif user_input == 'career opportunities':
         response = "Click the link for career opportunities at RedFerns Tech."
         link = "https://redfernstech.com/careers/"
-    elif user_input == 'menu':
+    elif user_input == 'Menu':
         response = ("Hi! Welcome to RedFerns Tech! I'm FernAI, here to help you explore our innovative solutions and services.\n"
                     "Please select from below")
         options = ["Know more about RedFerns Tech", "Our services", "Our products", "Career opportunities", "Chat with an expert"]
