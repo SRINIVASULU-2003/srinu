@@ -70,7 +70,7 @@ def get_response():
     elif user_input == 'career opportunities':
         response = "Click the link for career opportunities at RedFerns Tech."
         link = "https://redfernstech.com/careers/"
-    elif user_input == 'Menu':
+    elif user_input == 'menu':
         response = ("Hi! Welcome to RedFerns Tech! I'm FernAI, here to help you explore our innovative solutions and services.\n"
                     "Please select from below")
         options = ["Know more about RedFerns Tech", "Our services", "Our products", "Career opportunities", "Chat with an expert"]
