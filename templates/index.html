@@ -255,7 +255,7 @@
 
             // Append a clickable link if provided in the response
             if (data.link) {
-                appendMessage('bot', <a href="${data.link}" target="_blank">Click here</a>);
+                appendMessage('bot', `<a href="${data.link}" target="_blank">Click here</a>`);
             }
         })
         .catch(error => {
@@ -269,7 +269,7 @@
             const chatBox = document.getElementById('chat-box');
             const messageElement = document.createElement('div');
             messageElement.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
-            messageElement.innerHTML = <span class="message-content">${message}</span>;
+            messageElement.innerHTML = `<span class="message-content">${message}</span>`;
             chatBox.appendChild(messageElement);
             chatBox.scrollTop = chatBox.scrollHeight;
         }
