@@ -22,21 +22,20 @@
         }
 
         .chatbot-popup {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    width: 450px;
-    max-height: 80vh;
-    height: 1400px;
-    z-index: 10000;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            width: 450px;
+            max-height: 80vh;
+            height: 1400px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
 
         .chat-header {
             background-color: #CF2E2E;
@@ -86,7 +85,7 @@
             background-color: #F1F0F0;
             align-self: flex-start;
             display: flex;
-            align-items: flexx-start;
+            align-items: flex-start;
             flex-direction: column;
             max-width: 100%;
             padding: 10px 15px;
@@ -152,19 +151,10 @@
     <div class="chatbot-popup" id="chatbot-popup">
         <div class="chat-header">
             <span>FernAI</span>
-            
+            <button id="close-btn">×</button>
         </div>
         <div class="chat-box" id="chat-box">
-            <div class="bot-message">
-                <span class="message-content">Hi! Welcome to RedFerns Tech! I'm FernAI, here to help you explore our innovative solutions and services. Please select from below:</span>
-                <div class="button-container">
-                    <button class="btn btn-primary" onclick="sendMessage('know more about redferns tech')">Know more about RedFerns Tech</button>
-                    <button class="btn btn-primary" onclick="sendMessage('our services')">Our services</button>
-                    <button class="btn btn-primary" onclick="sendMessage('our products')">Our products</button>
-                    <button class="btn btn-primary" onclick="sendMessage('career opportunities')">Career opportunities</button>
-                    <button class="btn btn-primary" onclick="chatWithExpert()">Chat with an expert</button>
-                </div>
-            </div>
+            <!-- Chat messages will be appended here -->
         </div>
         <div class="gradio-container" id="gradio-container">
             <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.36.1/gradio.js"></script>
@@ -176,6 +166,13 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Restore chat state if available
+            const chatState = JSON.parse(localStorage.getItem('chatState'));
+            if (chatState) {
+                chatState.messages.forEach(msg => appendMessage(msg.sender, msg.content));
+                localStorage.removeItem('chatState'); // Clear chat state after restoring
+            }
+
             document.getElementById('chatbot-popup').style.display = 'block';
         });
 
@@ -184,86 +181,99 @@
         });
 
         function sendMessage(message) {
-    // Convert message to lower case for consistent comparison
-    const lowerCaseMessage = message.toLowerCase();
+            // Convert message to lower case for consistent comparison
+            const lowerCaseMessage = message.toLowerCase();
 
-    // Redirect for specific messages
-    if (lowerCaseMessage === "chat with an expert") {
-        window.location.href = '/chatbot';
-    } else if (lowerCaseMessage === "currency conversion app") {
-        window.location.href = 'https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000Is77CUAR';
-    } 
-    else if (lowerCaseMessage === "mass approvals app") {
-        window.location.href = 'https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000K24EdUAJ';
-    }
-    else if (lowerCaseMessage === "thumbnail viewer app") {
-        window.location.href = 'https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000K8u1dUAB';
-    }
-    else if (lowerCaseMessage === "product filter app") {
-        window.location.href = 'https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000K23xNUAR';
-    }
-     else if (lowerCaseMessage === "zoho") {
-        window.location.href = 'https://redfernstech.com/services-list/zoho-crm/';
-    }
-     else if (lowerCaseMessage === "data science") {
-        window.location.href = 'https://redfernstech.com/services-list/data-science/';
-    }
-     else if (lowerCaseMessage === "machine learning") {
-        window.location.href = 'https://redfernstech.com/services-list/machine-learning/';
-    }
-     else if (lowerCaseMessage === "career opportunities") {
-        window.location.href = 'https://redfernstech.com/careers/';
-    }
-     else if (lowerCaseMessage === "lightning service") {
-        window.location.href = 'https://redfernstech.com/services-list/salesforce-lightning-services/';
-    }else if (lowerCaseMessage === "app development") {
-        window.location.href = 'https://redfernstech.com/services-list/salesforce-app-development/';
-    }else if (lowerCaseMessage === "sites and communities") {
-        window.location.href = 'https://redfernstech.com/services-list/salesforce-sites-communities/';
-    }else if (lowerCaseMessage === "admin support") {
-        window.location.href = 'https://redfernstech.com/services-list/salesforce-admin-and-support/';
-    }else {
-        // Append the user's message to the chat interface
-        appendMessage('user', message);
+            // Store chat state before redirecting
+            const chatState = {
+                messages: Array.from(document.querySelectorAll('.user-message, .bot-message')).map(el => ({
+                    sender: el.classList.contains('user-message') ? 'user' : 'bot',
+                    content: el.querySelector('.message-content').innerHTML
+                }))
+            };
+            localStorage.setItem('chatState', JSON.stringify(chatState));
 
-        // Send the message to the server
-        fetch('/get_response', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: 'user_input=' + encodeURIComponent(message)
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Append the bot's response to the chat interface
-            appendMessage('bot', data.response);
+            // Redirect for specific messages
+            if (lowerCaseMessage === "chat with an expert") {
+                window.location.href = '/chatbot';
+            } else if (lowerCaseMessage === "currency conversion app") {
+                window.location.href = 'https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000Is77CUAR';
+            } 
+            else if (lowerCaseMessage === "mass approvals app") {
+                window.location.href = 'https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000K24EdUAJ';
+            }
+            else if (lowerCaseMessage === "thumbnail viewer app") {
+                window.location.href = 'https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000K8u1dUAB';
+            }
+            else if (lowerCaseMessage === "product filter app") {
+                window.location.href = 'https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000K23xNUAR';
+            }
+            else if (lowerCaseMessage === "zoho") {
+                window.location.href = 'https://redfernstech.com/services-list/zoho-crm/';
+            }
+            else if (lowerCaseMessage === "data science") {
+                window.location.href = 'https://redfernstech.com/services-list/data-science/';
+            }
+            else if (lowerCaseMessage === "machine learning") {
+                window.location.href = 'https://redfernstech.com/services-list/machine-learning/';
+            }
+            else if (lowerCaseMessage === "career opportunities") {
+                window.location.href = 'https://redfernstech.com/careers/';
+            }
+            else if (lowerCaseMessage === "lightning service") {
+                window.location.href = 'https://redfernstech.com/services-list/salesforce-lightning-services/';
+            }
+            else if (lowerCaseMessage === "app development") {
+                window.location.href = 'https://redfernstech.com/services-list/salesforce-app-development/';
+            }
+            else if (lowerCaseMessage === "sites and communities") {
+                window.location.href = 'https://redfernstech.com/services-list/salesforce-sites-communities/';
+            }
+            else if (lowerCaseMessage === "admin support") {
+                window.location.href = 'https://redfernstech.com/services-list/salesforce-admin-support/';
+            }
+            else {
+                // Append the user's message to the chat interface
+                appendMessage('user', message);
 
-            // Create buttons for each option provided in the response
-            if (data.options && data.options.length > 0) {
-                const buttonContainer = document.createElement('div');
-                buttonContainer.classList.add('button-container');
-                data.options.forEach(option => {
-                    const button = document.createElement('button');
-                    button.textContent = option;
-                    button.classList.add('btn', 'btn-primary');
-                    button.onclick = () => sendMessage(option);
-                    buttonContainer.appendChild(button);
+                // Send the message to the server
+                fetch('/get_response', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'user_input=' + encodeURIComponent(message)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Append the bot's response to the chat interface
+                    appendMessage('bot', data.response);
+
+                    // Create buttons for each option provided in the response
+                    if (data.options && data.options.length > 0) {
+                        const buttonContainer = document.createElement('div');
+                        buttonContainer.classList.add('button-container');
+                        data.options.forEach(option => {
+                            const button = document.createElement('button');
+                            button.textContent = option;
+                            button.classList.add('btn', 'btn-primary');
+                            button.onclick = () => sendMessage(option);
+                            buttonContainer.appendChild(button);
+                        });
+                        document.getElementById('chat-box').appendChild(buttonContainer);
+                    }
+
+                    // Append a clickable link if provided in the response
+                    if (data.link) {
+                        appendMessage('bot', `<a href="${data.link}" target="_blank">Click here</a>`);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    appendMessage('bot', 'Sorry, there was an error processing your request. Please try again.');
                 });
-                document.getElementById('chat-box').appendChild(buttonContainer);
             }
-
-            // Append a clickable link if provided in the response
-            if (data.link) {
-                appendMessage('bot', `<a href="${data.link}" target="_blank">Click here</a>`);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            appendMessage('bot', 'Sorry, there was an error processing your request. Please try again.');
-        });
-    }
-}
+        }
 
         function appendMessage(sender, message) {
             const chatBox = document.getElementById('chat-box');
